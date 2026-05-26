@@ -1,0 +1,34 @@
+services:
+
+  - type: web
+
+    name: engineering-context-ai
+
+    env: python
+
+    plan: free
+
+    buildCommand: |
+
+      pip install --upgrade pip
+      pip install -r requirements.txt
+
+    startCommand: |
+
+      uvicorn app.main:app \
+      --host 0.0.0.0 \
+      --port $PORT
+
+    envVars:
+
+      - key: QDRANT_URL
+        sync: false
+
+      - key: QDRANT_API_KEY
+        sync: false
+
+      - key: HF_TOKEN
+        sync: false
+
+      - key: LYZR_API_KEY
+        sync: false

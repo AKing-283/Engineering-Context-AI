@@ -1,0 +1,121 @@
+# ======================
+# Python
+# ======================
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+
+venv/
+ENV/
+env/
+.venv/
+
+# Environment variables
+
+.env
+
+# ======================
+# Streamlit
+# ======================
+
+.streamlit/
+
+# ======================
+# HuggingFace / Models
+# ======================
+
+.cache/
+huggingface/
+hf_cache/
+
+# Sentence transformer cache
+
+models/
+*.bin
+*.pt
+*.safetensors
+
+# ======================
+# IDE
+# ======================
+
+.vscode/
+.idea/
+
+# ======================
+# OS files
+# ======================
+
+.DS_Store
+Thumbs.db
+
+# ======================
+# Logs
+# ======================
+
+*.log
+
+# ======================
+# Testing
+# ======================
+
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ======================
+# Build artifacts
+# ======================
+
+build/
+dist/
+*.egg-info/
+
+# ======================
+# Streamlit cache
+# ======================
+
+.streamlit/secrets.toml
+
+# ======================
+# Jupyter
+# ======================
+
+.ipynb_checkpoints/
+
+# ======================
+# Temporary files
+# ======================
+
+tmp/
+temp/
+*.tmp
+
+# ======================
+# LocalTunnel / Ngrok
+# ======================
+
+*.ngrok
+*.loca
+
+# ======================
+# Runtime
+# ======================
+
+*.sqlite3
+
+# ======================
+# Render / deployment
+# ======================
+
+.render/
+
+# ======================
+# Mac/Linux hidden
+# ======================
+
+.AppleDouble
+.LSOverride
