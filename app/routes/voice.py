@@ -2,8 +2,16 @@ from fastapi import APIRouter
 from schemas.reasoning_schema import ReasoningInput
 
 from app.routes.reasoning import store
+from services.transcription import transcribe_audio
 
 router = APIRouter()
+
+from fastapi import UploadFile, File
+import os
+from uuid import uuid4
+
+AUDIO_DIR = "uploads/audio"
+os.makedirs(AUDIO_DIR, exist_ok=True)
 
 ENGINEERING_FIXES = {
     "bellman food": "Bellman Ford",
@@ -47,6 +55,40 @@ async def omi_webhook(body: dict):
     return {
         "message": "Stored",
         "subject": subject,
+        "transcript": transcript,
+        "storage": result,
+    }
+
+# ---------------------------------------------------------
+# NEW: Upload raw WAV audio, save it, return metadata
+# ---------------------------------------------------------
+@router.post("/voice/upload")
+async def upload_voice(file: UploadFile = File(...)):
+    # ensure WAV
+    allowed = [".wav", ".webm"]
+    if not any(file.filename.lower().endswith(ext) for ext in allowed):
+        return {"error": "Only WAV or WEBM files are supported"}
+
+    audio_id = str(uuid4())
+    save_path = os.path.join(AUDIO_DIR, f"{audio_id}.wav")
+
+    # read audio bytes directly
+    audio_bytes = await file.read()
+
+    # Whisper local transcription
+    transcript = transcribe_audio(audio_bytes)
+
+    # still save WAV for audit/debug
+    with open(save_path, "wb") as f:
+        f.write(audio_bytes)
+    subject = "Voice"
+
+    payload = ReasoningInput(subject=subject, text=transcript)
+    result = await store(payload)
+
+    return {
+        "audio_id": audio_id,
+        "audio_path": save_path,
         "transcript": transcript,
         "storage": result,
     }

@@ -15,6 +15,23 @@ if st.button("Store Memory"):
 
 st.divider()
 
+# ---- Voice Recording Section ----
+st.subheader("🎤 Voice Memory Recorder")
+
+audio = st.audio_input("Record your voice")
+
+if audio:
+    st.audio(audio, format="audio/webm")
+
+    if st.button("Upload Audio"):
+        files = {
+            "file": ("audio.webm", audio.getvalue(), "audio/webm")
+        }
+        upload_result = requests.post(f"{API}/voice/upload", files=files)
+        st.json(upload_result.json())
+
+# ---- End Voice Recording Section ----
+
 query = st.text_input("Retrieve Context")
 
 if st.button("Search"):
