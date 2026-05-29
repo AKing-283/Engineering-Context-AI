@@ -4,8 +4,7 @@ services:
 
     name: engineering-context-ai
 
-    env: python
-    pythonVersion: 3.11
+    runtime: python3.11
 
     plan: free
 
