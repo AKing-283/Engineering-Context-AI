@@ -1,0 +1,71 @@
+/* Global Dark Futuristic Theme (Neon Blue Accent) */
+
+body, .stApp {
+    background-color: #0A0F1F !important;
+    color: #FFFFFF !important;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #00A8E8 !important;
+    text-shadow: 0 0 12px #00A8E8AA;
+}
+
+.block-container {
+    padding-top: 2rem;
+}
+
+/* Cards / Containers */
+.futuristic-card {
+    background-color: #0F162A;
+    border: 1px solid #00A8E833;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px #00A8E822;
+}
+
+/* Buttons */
+.stButton>button {
+    background-color: #001F33 !important;
+    color: #00A8E8 !important;
+    border: 1px solid #00A8E8 !important;
+    border-radius: 8px !important;
+    padding: 10px 20px !important;
+    font-weight: 600 !important;
+    transition: 0.2s ease-in-out !important;
+    box-shadow: 0 0 12px #00A8E844 !important;
+}
+
+.stButton>button:hover {
+    background-color: #002a44 !important;
+    box-shadow: 0 0 20px #00A8E8AA !important;
+    transform: scale(1.02);
+}
+
+/* Input Boxes */
+input, textarea, .stTextInput>div>div>input {
+    background-color: #0F162A !important;
+    color: #FFFFFF !important;
+    border: 1px solid #00A8E833 !important;
+}
+
+/* Select Boxes */
+.stSelectbox>div>div {
+    background-color: #0F162A !important;
+    color: white !important;
+    border-radius: 6px;
+    border: 1px solid #00A8E833 !important;
+}
+
+/* Dataframes */
+.dataframe {
+    color: white !important;
+}
+
+/* Warning / Success / Info boxes styling */
+.stAlert {
+    background-color: #0F162A !important;
+    border-left: 4px solid #00A8E8 !important;
+    color: white !important;
+}

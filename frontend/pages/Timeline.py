@@ -2,6 +2,10 @@ import pandas as pd
 import requests
 import streamlit as st
 
+# Load global dark‑futuristic theme
+with open("theme.css") as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
 API = "http://127.0.0.1:8000"
 
 st.title("🕒 Learning Timeline")

@@ -1,31 +1,31 @@
-import tempfile
-import whisper
 import os
+from dotenv import load_dotenv
+from groq import Groq
 
-# Load Whisper model ONCE (base = fast + accurate for hackathon)
-model = whisper.load_model("base")
+# Load .env
+load_dotenv()
+
+# Initialize Groq Whisper client
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 def transcribe_audio(audio_bytes: bytes) -> str:
     """
-    Transcribe audio from WEBM or WAV bytes using local Whisper.
-    Works fully offline.
+    Transcribe audio using Groq Whisper Medium API.
+    Supports WEBM and WAV (Streamlit mic input compatible).
+    Does not require ffmpeg or local Whisper.
     """
 
-    # Create a temporary file for Whisper
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
-        tmp.write(audio_bytes)
-        tmp_path = tmp.name
+    # Send audio bytes directly to Groq
+    response = client.audio.transcriptions.create(
+        file=("audio.webm", audio_bytes, "audio/webm"),
+        model="whisper-large-v3",
+        response_format="json"
+    )
 
-    try:
-        # Run Whisper transcription
-        result = model.transcribe(tmp_path)
+    # Temporary debug logs
+    print("DEBUG_RESPONSE:", response)
+    print("DEBUG_DIR:", dir(response))
 
-        # Extract text
-        transcript = result.get("text", "").strip()
-
-        return transcript
-
-    finally:
-        # Cleanup temp file
-        if os.path.exists(tmp_path):
-            os.remove(tmp_path)
+    # Extract transcript
+    transcript = response.text.strip()
+    return transcript

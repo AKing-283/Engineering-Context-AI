@@ -3,6 +3,8 @@ from schemas.reasoning_schema import ReasoningInput
 
 from app.routes.reasoning import store
 from services.transcription import transcribe_audio
+from agents.lyzr_client import ask_lyzr
+from services.subject_extractor import extract_subjects_from_lyzr_response
 
 router = APIRouter()
 
@@ -81,7 +83,11 @@ async def upload_voice(file: UploadFile = File(...)):
     # still save WAV for audit/debug
     with open(save_path, "wb") as f:
         f.write(audio_bytes)
-    subject = "Voice"
+
+    # Lyzr classification
+    lyzr_raw = ask_lyzr(f"Classify this engineering topic: {transcript}")
+    raw_text = lyzr_raw["response"]
+    subject = extract_subjects_from_lyzr_response(raw_text)
 
     payload = ReasoningInput(subject=subject, text=transcript)
     result = await store(payload)
